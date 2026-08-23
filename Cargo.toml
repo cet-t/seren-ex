@@ -1,0 +1,16 @@
+[package]
+name = "serenity-template"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+poise = { version = "0.6.2", features = ["chrono"] }
+serenity = { version = "0.12.5", features = ["chrono"] }
+seren = { git = "https://github.com/cet-t/seren" }
+colours = { git = "https://github.com/cet-t/colours" }
+anyhow = "1.0.104"
+log = "0.4.34"
+chrono = "0.4.45"
+tokio = { version = "1.53.1", features = ["full"] }
+urng = "0.13.0"
+dotenvy = "0.15.7"
