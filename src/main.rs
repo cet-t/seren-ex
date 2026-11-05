@@ -2,7 +2,7 @@ mod commands;
 mod macros;
 mod toolkit;
 
-use poise::samples::register_globally;
+use poise::builtins::register_globally;
 use poise::{Framework, FrameworkOptions};
 use serenity::all::{ActivityData, ClientBuilder, GatewayIntents, OnlineStatus, Ready};
 
