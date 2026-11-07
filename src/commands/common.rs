@@ -1,9 +1,9 @@
 use std::time::Instant;
 
+use moelle_sample::Choice;
 use poise::serenity_prelude::{Mentionable, User};
 use poise::{CreateReply, serenity_prelude::CreateEmbed};
 use seren::TimestampConvert;
-use urng::Choice;
 
 use crate::{Context, icode, is_bot, reply};
 
@@ -14,8 +14,9 @@ pub async fn greet(ctx: Context<'_>) -> anyhow::Result<()> {
 
     const GREETINGS: [&str; 3] = ["Hello", "こんにちは", "謝謝"];
 
-    let mut rng = urng::SplitMix32::default();
-    let reply = reply!("{}", rng.choice(&GREETINGS));
+    let now = chrono::Utc::now();
+    let mut rng = moelle_a::Sfc64::from(now.timestamp() as u64);
+    let reply = reply!("{}", rng.choice(&GREETINGS).unwrap_or(&"挨拶しないマン"));
     ctx.send(reply).await?;
 
     Ok(())
@@ -52,11 +53,7 @@ pub async fn info(ctx: Context<'_>, user: Option<User>) -> anyhow::Result<()> {
 
     ctx.defer().await?;
 
-    let user = if let Some(user) = &user {
-        user
-    } else {
-        ctx.author()
-    };
+    let user = user.as_ref().unwrap_or(ctx.author());
 
     let created_at = user.created_at().naive_local();
     let a = format!(
