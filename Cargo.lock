@@ -98,26 +98,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "175812e0be2bccb6abe50bb8d566126198344f707e304f45c648fd8f2cc0365e"
 
 [[package]]
-name = "bytemuck"
-version = "1.25.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "95832e849adfb21180ccb6826a99da14e5d266ae5c2e668e1602cf234f153797"
-dependencies = [
- "bytemuck_derive",
-]
-
-[[package]]
-name = "bytemuck_derive"
-version = "1.12.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fc0e56a716f1e132ff6bf4bdac1c944a3fcdc1cae65f70a4a2a1ac3b401d2d1f"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 3.0.3",
-]
-
-[[package]]
 name = "byteorder"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -285,16 +265,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "csbindgen"
-version = "1.9.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "950f59b281d7e20f050b4efd56d7c36c0deb853bf9ea1f20b985a75ae5b03b34"
-dependencies = [
- "regex",
- "syn 2.0.119",
-]
-
-[[package]]
 name = "darling"
 version = "0.20.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -367,6 +337,17 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 1.0.109",
+]
+
+[[package]]
+name = "derive-where"
+version = "1.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2e2b94854e8576378ccda7c8de8a66ed8b4e8acbd2c50ec3418ea6c8aaf4b567"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 3.0.3",
 ]
 
 [[package]]
@@ -958,6 +939,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "moelle"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ca351a2a6e4eb1eacbadc43860fb89352d8b7bbe5647dd3b6e449d9c84d49f01"
+dependencies = [
+ "pastey",
+]
+
+[[package]]
+name = "moelle_a"
+version = "0.1.0"
+source = "git+https://github.com/cet-t/moelle_a#2c87fafc6f2e5ddf908d6b3ea2937bab6149a9cf"
+dependencies = [
+ "moelle",
+ "splitmix",
+]
+
+[[package]]
+name = "moelle_sample"
+version = "0.1.0"
+source = "git+https://github.com/cet-t/moelle_sample?rev=60558eb#60558eb601a583ca556d79eac64876c6aeb5990a"
+dependencies = [
+ "moelle",
+]
+
+[[package]]
 name = "num-conv"
 version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1002,12 +1009,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "paste"
-version = "1.0.15"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
-
-[[package]]
 name = "pastey"
 version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1042,6 +1043,37 @@ dependencies = [
  "tokio",
  "tracing",
  "trim-in-place",
+]
+
+[[package]]
+name = "poise"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2f17581b49c7da59e7eb044e55a113a75e9e933647b8616b204de5aa78fa8b7f"
+dependencies = [
+ "async-trait",
+ "derive-where",
+ "futures-util",
+ "indexmap",
+ "parking_lot",
+ "poise_macros",
+ "regex",
+ "serenity",
+ "tokio",
+ "tracing",
+ "trim-in-place",
+]
+
+[[package]]
+name = "poise_macros"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "98025778ad675ec550e4ae7b65222a309575d648be4e9b0b47e3061208c9b5ad"
+dependencies = [
+ "darling",
+ "proc-macro2",
+ "quote",
+ "syn 2.0.119",
 ]
 
 [[package]]
@@ -1506,7 +1538,7 @@ source = "git+https://github.com/cet-t/seren#693d015157fe28b46d314fa8c4ae95d1c0d
 dependencies = [
  "async-trait",
  "chrono",
- "poise",
+ "poise 0.6.2",
  "serenity",
 ]
 
@@ -1549,18 +1581,19 @@ dependencies = [
 
 [[package]]
 name = "serenity-template"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "anyhow",
  "chrono",
  "colours",
  "dotenvy",
  "log",
- "poise",
+ "moelle_a",
+ "moelle_sample",
+ "poise 0.7.1",
  "seren",
  "serenity",
  "tokio",
- "urng",
 ]
 
 [[package]]
@@ -1644,6 +1677,12 @@ dependencies = [
  "libc",
  "windows-sys 0.61.2",
 ]
+
+[[package]]
+name = "splitmix"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cfec3fc514f45b46d81749440cecca8a59f01655b887ba6f4b0f3f3a005b7c91"
 
 [[package]]
 name = "stable_deref_trait"
@@ -2103,18 +2142,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "urng"
-version = "0.13.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "240fa963e418237382c3530e02e558c202c14714e14f02c62ca91d24a7f83ae4"
-dependencies = [
- "bytemuck",
- "csbindgen",
- "pastey",
- "wrapn",
-]
-
-[[package]]
 name = "utf-8"
 version = "0.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2418,15 +2445,6 @@ name = "windows_x86_64_msvc"
 version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
-
-[[package]]
-name = "wrapn"
-version = "0.6.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f5ef8b69c53e9b5a27612c3db6bec71a750fc8248b44b0c69449c57435e982f0"
-dependencies = [
- "paste",
-]
 
 [[package]]
 name = "writeable"
