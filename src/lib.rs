@@ -74,13 +74,13 @@ pub fn client_builder(options: StartOptions<'_>) -> anyhow::Result<ClientBuilder
 }
 
 /// ```no_run
-/// use serenity_template::{
+/// use seren_ex::{
 ///     CommandRegistration, CommonCommands, FrameworkConfig, SetupOptions, StartOptions,
 /// };
 ///
 /// #[tokio::main]
 /// async fn main() -> anyhow::Result<()> {
-///     serenity_template::start(StartOptions {
+///     seren_ex::start(StartOptions {
 ///         token_key: None,
 ///         intents: serenity::all::GatewayIntents::GUILDS,
 ///         framework: FrameworkConfig {
