@@ -8,8 +8,8 @@ use seren::TimestampConvert;
 use crate::{Context, icode, is_bot, reply};
 
 #[poise::command(slash_command)]
-pub async fn greet(ctx: Context<'_>) -> anyhow::Result<()> {
-    crate::info!("{}: {}", stringify!(self::ping), ctx.author().name);
+pub(crate) async fn greet(ctx: Context<'_>) -> anyhow::Result<()> {
+    crate::info!("{}: {}", stringify!(self::greet), ctx.author().name);
     is_bot!(ctx);
 
     const GREETINGS: [&str; 3] = ["Hello", "こんにちは", "謝謝"];
@@ -23,7 +23,7 @@ pub async fn greet(ctx: Context<'_>) -> anyhow::Result<()> {
 }
 
 #[poise::command(slash_command)]
-pub async fn ping(ctx: Context<'_>) -> anyhow::Result<()> {
+pub(crate) async fn ping(ctx: Context<'_>) -> anyhow::Result<()> {
     crate::info!("{}: {}", stringify!(self::ping), ctx.author().name);
     is_bot!(ctx);
 
@@ -47,7 +47,7 @@ pub async fn ping(ctx: Context<'_>) -> anyhow::Result<()> {
 }
 
 #[poise::command(slash_command, prefix_command)]
-pub async fn info(ctx: Context<'_>, user: Option<User>) -> anyhow::Result<()> {
+pub(crate) async fn info(ctx: Context<'_>, user: Option<User>) -> anyhow::Result<()> {
     crate::info!("{}: {}", stringify!(self::info), ctx.author().name);
     is_bot!(ctx);
 

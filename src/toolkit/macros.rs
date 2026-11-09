@@ -1,42 +1,37 @@
-#![allow(unused)]
-
-use std::time::SystemTime;
-
-use chrono::{DateTime, Local};
-use colours::Rgb;
-use poise::serenity_prelude::{CreateEmbed, CreateEmbedFooter, GuildRef};
-
 #[macro_export]
 macro_rules! token {
     ($key:expr) => {{
-        dotenvy::dotenv().map_err(|e| anyhow::anyhow!("Failed to load .env file: {}", e))?;
-        std::env::var($key)
-            .to_owned()
-            .map_err(|e| anyhow::anyhow!("Failed to read TOKEN from environment: {}", e))
+        $crate::__private::dotenvy::dotenv()
+            .map_err(|e| $crate::__private::anyhow::anyhow!("Failed to load .env file: {}", e))?;
+        ::std::env::var($key).to_owned().map_err(|e| {
+            $crate::__private::anyhow::anyhow!("Failed to read TOKEN from environment: {}", e)
+        })
     }};
     () => {
-        token!("TOKEN")
+        $crate::token!("TOKEN")
     };
 }
 
 #[macro_export]
 macro_rules! embed {
     ($title:expr, $author:expr, $colour:expr, $fields:expr) => {
-        ::serenity::all::CreateEmbed::default()
+        $crate::__private::serenity::all::CreateEmbed::default()
             .title($title)
             .colour($colour)
-            .author(::serenity::all::CreateEmbedAuthor::new($author))
-            .fields($fields.iter().copied())
+            .author($crate::__private::serenity::all::CreateEmbedAuthor::new(
+                $author,
+            ))
+            .fields($fields.iter().cloned())
     };
 }
 
 #[macro_export]
 macro_rules! reply {
     () => {
-        ::poise::CreateReply::default()
+        $crate::__private::poise::CreateReply::default()
     };
     ($($arg:tt)*) => {
-        ::poise::CreateReply::default().content(format!($($arg)*))
+        $crate::__private::poise::CreateReply::default().content(format!($($arg)*))
     };
 }
 
@@ -48,7 +43,7 @@ macro_rules! edit {
 #[macro_export]
 macro_rules! call {
     ($mentionable:expr) => {{
-        use poise::serenity_prelude::Mentionable;
+        use $crate::__private::poise::serenity_prelude::Mentionable as _;
         $mentionable.mention()
     }};
 }
@@ -56,7 +51,7 @@ macro_rules! call {
 #[macro_export]
 macro_rules! wait {
     ($unit:ident $duration:expr) => {{
-        use tokio::time::{Duration, sleep};
+        use $crate::__private::tokio::time::{Duration, sleep};
 
         match stringify!($unit) {
             "s" | "sec" => sleep(Duration::from_secs_f64($duration as f64)),
